@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OposIA — Prepara tu oposición con IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0D0D0F;
+  --paper: #F5F3EE;
+  --accent: #1A4FD4;
+  --accent2: #E8F000;
+  --mid: #6B6B72;
+  --border: #D8D5CE;
+  --card-bg: #FFFFFF;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 40px;
+  background: rgba(245,243,238,0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 20px; letter-spacing: -0.5px;
+}
+.logo span { color: var(--accent); }
+.nav-cta {
+  background: var(--ink); color: var(--paper);
+  padding: 9px 20px; border-radius: 99px;
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  border: none; text-decoration: none;
+  transition: transform 0.15s, background 0.15s;
+}
+.nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 120px 40px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent2); color: var(--ink);
+  padding: 5px 14px; border-radius: 99px;
+  font-size: 12px; font-weight: 500;
+  margin-bottom: 24px;
+  letter-spacing: 0.03em;
+}
+.eyebrow-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+}
+.h1-blue { color: var(--accent); }
+.h1-strike {
+  position: relative; display: inline-block;
+}
+.h1-strike::after {
+  content: ''; position: absolute;
+  left: 0; right: 0; top: 50%; height: 4px;
+  background: var(--accent2); transform: rotate(-2deg);
+}
+
+.hero-desc {
+  font-size: 17px; font-weight: 300; color: var(--mid);
+  line-height: 1.7; margin-bottom: 36px;
+  max-width: 460px;
+}
+
+.hero-form {
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.hero-input {
+  flex: 1; min-width: 220px;
+  padding: 14px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  background: var(--card-bg);
+  color: var(--ink);
+  transition: border-color 0.15s;
+  outline: none;
+}
+.hero-input:focus { border-color: var(--accent); }
+.hero-input::placeholder { color: #B0ADA6; }
+.hero-btn {
+  padding: 14px 28px;
+  background: var(--accent);
+  color: #fff;
+  border: none; border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+.hero-btn:hover { background: #1340B8; transform: translateY(-2px); }
+.hero-btn:active { transform: translateY(0); }
+.hero-subtext {
+  margin-top: 12px;
+  font-size: 12px; color: var(--mid);
+}
+
+/* HERO RIGHT */
+.hero-right { position: relative; }
+
+.mock-phone {
+  background: var(--card-bg);
+  border-radius: 28px;
+  border: 1.5px solid var(--border);
+  padding: 28px 24px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06);
+  max-width: 320px;
+  margin: 0 auto;
+  position: relative;
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+.mock-header {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.mock-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--accent); display: flex; align-items: center;
+  justify-content: center; font-size: 14px; color: #fff;
+  font-family: 'Syne', sans-serif; font-weight: 700;
+}
+.mock-name { font-size: 13px; font-weight: 500; }
+.mock-streak { font-size: 11px; color: var(--mid); }
+
+.mock-question {
+  background: #F0F4FF;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.mock-q-label { font-size: 10px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; margin-bottom: 6px; text-transform: uppercase; }
+.mock-q-text { font-size: 13px; line-height: 1.55; color: var(--ink); }
+
+.mock-option {
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 7px;
+  font-size: 12px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--card-bg);
+}
+.mock-option.correct {
+  background: #E8F5E9; border-color: #4CAF50; color: #1B5E20; font-weight: 500;
+}
+.mock-option.wrong {
+  background: #FFEBEE; border-color: #EF9A9A; color: #B71C1C;
+  text-decoration: line-through; opacity: 0.6;
+}
+.mock-option.neutral { color: var(--mid); }
+
+.mock-ai-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--accent2); padding: 4px 10px; border-radius: 99px;
+  font-size: 10px; font-weight: 500; margin-top: 10px;
+}
+
+.floating-badge {
+  position: absolute;
+  background: var(--ink); color: var(--paper);
+  padding: 8px 14px; border-radius: 12px;
+  font-size: 11px; font-weight: 500;
+  white-space: nowrap;
+}
+.fb-1 { top: -20px; right: -20px; animation: float 5s 1s ease-in-out infinite; }
+.fb-2 { bottom: 30px; left: -30px; background: var(--accent2); color: var(--ink); animation: float 5s 2s ease-in-out infinite; }
+
+/* ── BG DECORATION ── */
+.hero-bg {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none; z-index: -1; overflow: hidden;
+}
+.bg-circle {
+  position: absolute; border-radius: 50%;
+  border: 1px solid var(--border);
+}
+.bc1 { width: 600px; height: 600px; top: -200px; right: -200px; opacity: 0.5; }
+.bc2 { width: 300px; height: 300px; bottom: 100px; left: -100px; opacity: 0.4; }
+.bg-dot-grid {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, #C8C4BC 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.4;
+}
+
+/* ── SOCIAL PROOF ── */
+.social-bar {
+  background: var(--ink); color: var(--paper);
+  padding: 14px 40px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 48px; flex-wrap: wrap;
+}
+.sp-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.sp-num { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; color: var(--accent2); }
+
+/* ── SECTIONS ── */
+section { padding: 100px 40px; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 12px;
+}
+.section-h2 {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(28px, 4vw, 44px);
+  letter-spacing: -1.5px; line-height: 1.1;
+  margin-bottom: 16px;
+}
+.section-sub { font-size: 17px; color: var(--mid); font-weight: 300; line-height: 1.6; max-width: 560px; }
+
+/* ── PROBLEM ── */
+.problem-section { background: var(--card-bg); }
+.problem-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 2px;
+  margin-top: 48px;
+}
+.prob-card {
+  padding: 32px 28px;
+  background: var(--paper);
+  position: relative;
+}
+.prob-card:first-child { border-radius: 16px 0 0 16px; }
+.prob-card:last-child { border-radius: 0 16px 16px 0; }
+.prob-icon { font-size: 28px; margin-bottom: 14px; }
+.prob-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+.prob-text { font-size: 13px; color: var(--mid); line-height: 1.65; }
+
+/* ── FEATURES ── */
+.features-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-top: 56px;
+}
+.feat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.feat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,0.08); }
+.feat-card.featured {
+  background: var(--ink); color: var(--paper);
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center;
+}
+.feat-tag {
+  display: inline-block; font-size: 10px; font-weight: 500;
+  padding: 3px 10px; border-radius: 99px;
+  background: var(--accent2); color: var(--ink);
+  margin-bottom: 14px; letter-spacing: 0.04em;
+}
+.feat-icon { font-size: 32px; margin-bottom: 14px; }
+.feat-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 8px; }
+.feat-desc { font-size: 14px; color: var(--mid); line-height: 1.65; }
+.feat-card.featured .feat-desc { color: #9CA3AF; }
+.feat-card.featured .feat-title { color: var(--paper); font-size: 26px; }
+
+.feat-demo {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 20px;
+}
+.feat-demo-line {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 12px; font-size: 13px;
+}
+.fdl-role { font-weight: 500; min-width: 40px; font-size: 11px; opacity: 0.5; padding-top: 1px; }
+.fbl-bubble {
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 8px 12px; line-height: 1.5;
+  color: rgba(255,255,255,0.85);
+}
+.fbl-bubble.ai {
+  background: rgba(26,79,212,0.4);
+}
+
+/* ── OPOSICIONES ── */
+.opo-section { background: var(--card-bg); }
+.opo-grid {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 40px;
+}
+.opo-pill {
+  padding: 10px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 99px;
+  font-size: 13px; font-weight: 400;
+  background: var(--paper);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.opo-pill:hover, .opo-pill.active {
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+}
+.opo-pill.hot {
+  background: var(--accent2); border-color: transparent;
+  font-weight: 500;
+}
+
+/* ── PRICING ── */
+.pricing-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  max-width: 680px; margin: 48px auto 0;
+}
+.price-card {
+  border: 1.5px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 32px;
+  background: var(--card-bg);
+}
+.price-card.pro {
+  background: var(--ink); color: var(--paper);
+  border-color: var(--ink);
+  position: relative; overflow: hidden;
+}
+.price-card.pro::before {
+  content: 'MÁS POPULAR';
+  position: absolute; top: 18px; right: -28px;
+  background: var(--accent2); color: var(--ink);
+  font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+  padding: 4px 40px; transform: rotate(45deg);
+}
+.price-label { font-size: 12px; font-weight: 500; color: var(--mid); letter-spacing: 0.05em; margin-bottom: 8px; }
+.price-card.pro .price-label { color: #9CA3AF; }
+.price-amount {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 42px; letter-spacing: -2px;
+  margin-bottom: 4px;
+}
+.price-period { font-size: 13px; color: var(--mid); margin-bottom: 24px; }
+.price-card.pro .price-period { color: #9CA3AF; }
+.price-features { list-style: none; }
+.price-features li {
+  padding: 7px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+  color: var(--mid);
+}
+.price-card.pro .price-features li { border-color: rgba(255,255,255,0.08); color: #D1D5DB; }
+.price-features li:last-child { border-bottom: none; }
+.check { color: #4CAF50; font-size: 14px; }
+.cross { color: #EF9A9A; font-size: 14px; }
+.price-btn {
+  width: 100%; margin-top: 24px;
+  padding: 14px;
+  border-radius: 12px; border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all 0.15s;
+}
+.price-btn.free { background: var(--paper); color: var(--ink); border: 1.5px solid var(--border); }
+.price-btn.free:hover { border-color: var(--ink); }
+.price-btn.paid { background: var(--accent2); color: var(--ink); }
+.price-btn.paid:hover { background: #d4d900; transform: translateY(-1px); }
+
+/* ── TESTIMONIALS ── */
+.test-section { background: var(--paper); }
+.test-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 48px; }
+.test-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+}
+.test-stars { color: #F59E0B; font-size: 14px; margin-bottom: 12px; }
+.test-text { font-size: 14px; line-height: 1.7; color: var(--ink); margin-bottom: 16px; font-style: italic; }
+.test-author { font-size: 12px; font-weight: 500; }
+.test-role { font-size: 11px; color: var(--mid); }
+
+/* ── FAQ ── */
+.faq-section { background: var(--card-bg); }
+.faq-list { margin-top: 40px; max-width: 700px; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q {
+  padding: 18px 0;
+  font-size: 15px; font-weight: 500;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+}
+.faq-q:hover { color: var(--accent); }
+.faq-icon { font-size: 20px; transition: transform 0.2s; flex-shrink: 0; }
+.faq-a {
+  font-size: 14px; color: var(--mid); line-height: 1.7;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s;
+}
+.faq-a.open { max-height: 200px; padding-bottom: 18px; }
+
+/* ── CTA FINAL ── */
+.cta-section {
+  background: var(--ink); color: var(--paper);
+  text-align: center;
+  padding: 100px 40px;
+}
+.cta-section .section-h2 { color: var(--paper); }
+.cta-section .section-sub { color: #9CA3AF; margin: 0 auto 40px; }
+.cta-form {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+}
+.cta-input {
+  padding: 14px 20px; border-radius: 12px;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: var(--paper); font-family: 'DM Sans', sans-serif; font-size: 15px;
+  width: 280px; outline: none;
+  transition: border-color 0.15s;
+}
+.cta-input:focus { border-color: var(--accent2); }
+.cta-input::placeholder { color: rgba(255,255,255,0.3); }
+.cta-btn {
+  padding: 14px 32px; border-radius: 12px; border: none;
+  background: var(--accent2); color: var(--ink);
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
+  cursor: pointer; transition: all 0.15s;
+}
+.cta-btn:hover { background: #d4d900; transform: translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink); color: rgba(255,255,255,0.35);
+  padding: 24px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ── SUCCESS STATE ── */
+.success-msg {
+  display: none; padding: 14px 24px;
+  background: var(--accent2); color: var(--ink);
+  border-radius: 12px; font-weight: 500; font-size: 14px;
+  margin-top: 12px;
+}
+
+/* ── ANIMATIONS ── */
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+.fade-in.visible { opacity: 1; transform: none; }
+
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .hero { padding: 100px 20px 60px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .hero-right { display: none; }
+  section { padding: 60px 20px; }
+  .problem-grid, .features-grid, .test-grid { grid-template-columns: 1fr; }
+  .features-grid .feat-card.featured { grid-column: 1; display: block; }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 380px; }
+  .social-bar { gap: 24px; }
+  .opo-grid { gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Opos<span>IA</span></div>
+  <a class="nav-cta" href="#waitlist">Acceso anticipado →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="bg-dot-grid"></div>
+    <div class="bg-circle bc1"></div>
+    <div class="bg-circle bc2"></div>
+  </div>
+  <div class="hero-grid">
+    <div class="hero-left fade-in">
+      <div class="hero-eyebrow">
+        <div class="eyebrow-dot"></div>
+        Acceso anticipado disponible
+      </div>
+      <h1>
+        Prepara tu oposición.<br>
+        <span class="h1-blue">Con IA que nunca</span><br>
+        se queda sin preguntas.
+      </h1>
+      <p class="hero-desc">
+        La única app de oposiciones con un tutor de inteligencia artificial que genera tests infinitos, detecta tus puntos débiles y te explica cada error con referencia legal exacta.
+      </p>
+      <div id="waitlist">
+        <div class="hero-form">
+          <input class="hero-input" type="email" id="hero-email" placeholder="tu@email.com" />
+          <button class="hero-btn" onclick="joinWaitlist('hero')">Unirme a la lista →</button>
+        </div>
+        <div class="hero-subtext">✓ Gratis para siempre · ✓ Sin tarjeta · ✓ Acceso beta en junio 2026</div>
+        <div class="success-msg" id="hero-success">🎉 ¡Apuntado! Te avisamos cuando lancemos.</div>
+      </div>
+    </div>
+    <div class="hero-right fade-in" style="transition-delay:0.2s">
+      <div class="mock-phone">
+        <div class="floating-badge fb-1">🔥 Racha: 14 días</div>
+        <div class="floating-badge fb-2">✓ Pregunta generada por IA</div>
+        <div class="mock-header">
+          <div class="mock-avatar">C</div>
+          <div>
+            <div class="mock-name">Carlos — Aux. Administrativo</div>
+            <div class="mock-streak">247 preguntas respondidas hoy</div>
+          </div>
+        </div>
+        <div class="mock-question">
+          <div class="mock-q-label">Ley 39/2015 · Tema 8</div>
+          <div class="mock-q-text">¿Cuál es el plazo máximo para resolver un procedimiento administrativo cuando no existe normativa específica?</div>
+        </div>
+        <div class="mock-option correct">A) 3 meses ✓</div>
+        <div class="mock-option wrong">B) 6 meses</div>
+        <div class="mock-option neutral">C) 1 mes</div>
+        <div class="mock-option neutral">D) 2 meses</div>
+        <div class="mock-ai-tag">🤖 IA: Artículo 21.2 Ley 39/2015 — el plazo supletorio es 3 meses</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF BAR -->
+<div class="social-bar">
+  <div class="sp-item"><span class="sp-num">700k+</span> opositores en España</div>
+  <div class="sp-item"><span class="sp-num">43.000</span> plazas OPE 2026</div>
+  <div class="sp-item"><span class="sp-num">∞</span> preguntas generadas por IA</div>
+  <div class="sp-item"><span class="sp-num">0€</span> para empezar</div>
+</div>
+
+<!-- PROBLEMA -->
+<section class="problem-section">
+  <div class="section-inner fade-in">
+    <div class="section-label">El problema</div>
+    <h2 class="section-h2">Las apps de hoy son del siglo pasado.</h2>
+    <p class="section-sub">Miles de opositores llevan años con las mismas herramientas rotas. OposIA las arregla todas.</p>
+    <div class="problem-grid">
+      <div class="prob-card">
+        <div class="prob-icon">😴</div>
+        <div class="prob-title">Bancos estáticos que memorizas</div>
+        <div class="prob-text">Llevas 3 semanas y ya sabes las respuestas de memoria. Estás aprendiendo el orden, no el contenido. OposIA genera variaciones infinitas de cada pregunta.</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-icon">🤷</div>
+        <div class="prob-title">Sin saber dónde fallas de verdad</div>
+        <div class="prob-text">Cada app te dice el % de aciertos. Ninguna te dice que estás fallando sistemáticamente los artículos 40–60 de la Ley 39/2015 y necesitas repasarlos hoy.</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-icon">📚</div>
+        <div class="prob-title">Dudas que se quedan sin responder</div>
+        <div class="prob-text">Fallas una pregunta y no entiendes por qué. Abres ChatGPT, copias el enunciado, esperas... OposIA tiene un tutor especializado en tu oposición, siempre disponible.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="section-inner">
+    <div class="section-label fade-in">Cómo funciona</div>
+    <h2 class="section-h2 fade-in">Tu preparación, potenciada.</h2>
+    <div class="features-grid">
+
+      <div class="feat-card featured fade-in">
+        <div>
+          <div class="feat-tag">⭐ Feature estrella</div>
+          <div class="feat-title">Tutor IA que conoce tu oposición</div>
+          <p class="feat-desc">Pregúntale cualquier duda sobre tu temario y recibirás una respuesta con referencia exacta al artículo de ley. No es un ChatGPT genérico: está entrenado con la normativa de tu convocatoria.</p>
+        </div>
+        <div class="feat-demo">
+          <div class="feat-demo-line">
+            <div class="fbl-role">Tú</div>
+            <div class="fbl-bubble">¿Cuál es la diferencia entre nulidad y anulabilidad en la Ley 39/2015?</div>
+          </div>
+          <div class="feat-demo-line">
+            <div class="fbl-role">IA</div>
+            <div class="fbl-bubble ai">La nulidad (Art. 47) es radical y permanente: el acto no puede subsanarse. La anulabilidad (Art. 48) es subsanable si se corrige el defecto antes de que se declare. La diferencia clave es que la nulidad puede declararse en cualquier momento, mientras que la anulabilidad prescribe...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feat-card fade-in">
+        <div class="feat-icon">🧠</div>
+        <div class="feat-tag">Exclusivo</div>
+        <div class="feat-title">Mapa de debilidades</div>
+        <p class="feat-desc">Visualiza exactamente qué artículos y temas dominas y cuáles necesitas reforzar. El plan de estudio se adapta en tiempo real a tus puntos débiles.</p>
+      </div>
+
+      <div class="feat-card fade-in">
+        <div class="feat-icon">♾️</div>
+        <div class="feat-title">Preguntas infinitas</div>
+        <p class="feat-desc">¿Acabaste el banco de preguntas? Imposible con OposIA. La IA genera variaciones nuevas de cada artículo con distintos niveles de dificultad y trampas reales de examen.</p>
+      </div>
+
+      <div class="feat-card fade-in">
+        <div class="feat-icon">⏱️</div>
+        <div class="feat-title">Simulacros oficiales</div>
+        <p class="feat-desc">Exámenes con el formato exacto de tu convocatoria: número de preguntas, tiempo límite, penalización por error. Practica bajo presión real antes del día D.</p>
+      </div>
+
+      <div class="feat-card fade-in">
+        <div class="feat-icon">🔔</div>
+        <div class="feat-title">Alertas de convocatoria</div>
+        <p class="feat-desc">Recibe notificación inmediata cuando tu oposición publica nuevas fechas, temarios actualizados o cambios en la convocatoria. Sin necesidad de revisar el BOE cada día.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- OPOSICIONES -->
+<section class="opo-section">
+  <div class="section-inner fade-in">
+    <div class="section-label">Cobertura</div>
+    <h2 class="section-h2">Una app para todas tus oposiciones.</h2>
+    <p class="section-sub">No compres una app por cada convocatoria. Con OposIA tienes acceso a todas con una sola suscripción.</p>
+    <div class="opo-grid">
+      <div class="opo-pill hot">🔥 Policía Nacional</div>
+      <div class="opo-pill hot">🔥 Guardia Civil</div>
+      <div class="opo-pill hot">🔥 Aux. Administrativo AGE</div>
+      <div class="opo-pill active">Administrativo AGE</div>
+      <div class="opo-pill">Auxilio Judicial</div>
+      <div class="opo-pill">Tramitación Procesal</div>
+      <div class="opo-pill">Enfermería SAS</div>
+      <div class="opo-pill">TCAE</div>
+      <div class="opo-pill">Mossos d'Esquadra</div>
+      <div class="opo-pill">Maestros / Educación</div>
+      <div class="opo-pill">Hacienda</div>
+      <div class="opo-pill">Correos</div>
+      <div class="opo-pill">Celador</div>
+      <div class="opo-pill">+ 50 más →</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section>
+  <div class="section-inner" style="text-align:center">
+    <div class="section-label fade-in">Planes</div>
+    <h2 class="section-h2 fade-in">Empieza gratis. Escala cuando quieras.</h2>
+    <p class="section-sub fade-in" style="margin:0 auto">Una plaza de funcionario vale cientos de miles en ingresos futuros. 6,99€/mes es la mejor inversión que puedes hacer.</p>
+    <div class="pricing-grid">
+      <div class="price-card fade-in">
+        <div class="price-label">GRATIS</div>
+        <div class="price-amount">0€</div>
+        <div class="price-period">para siempre</div>
+        <ul class="price-features">
+          <li><span class="check">✓</span> 10 tests diarios</li>
+          <li><span class="check">✓</span> 2 oposiciones</li>
+          <li><span class="check">✓</span> Explicaciones básicas</li>
+          <li><span class="check">✓</span> 3 preguntas al tutor IA/día</li>
+          <li><span class="cross">✗</span> Tests ilimitados</li>
+          <li><span class="cross">✗</span> Mapa de debilidades</li>
+          <li><span class="cross">✗</span> Simulacros oficiales</li>
+          <li><span class="cross">✗</span> Sin anuncios</li>
+        </ul>
+        <button class="price-btn free" onclick="joinWaitlist('pricing-free')">Empezar gratis</button>
+      </div>
+      <div class="price-card pro fade-in">
+        <div class="price-label">PREMIUM</div>
+        <div class="price-amount">6,99€</div>
+        <div class="price-period">/ mes · o 49,99€/año (ahorra 40%)</div>
+        <ul class="price-features">
+          <li><span class="check">✓</span> Tests ilimitados</li>
+          <li><span class="check">✓</span> Todas las oposiciones</li>
+          <li><span class="check">✓</span> Preguntas IA infinitas</li>
+          <li><span class="check">✓</span> Tutor IA ilimitado</li>
+          <li><span class="check">✓</span> Mapa de debilidades</li>
+          <li><span class="check">✓</span> Simulacros oficiales</li>
+          <li><span class="check">✓</span> Sin anuncios</li>
+          <li><span class="check">✓</span> Modo offline</li>
+        </ul>
+        <button class="price-btn paid" onclick="joinWaitlist('pricing-pro')">Acceso anticipado →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS (ficticios/beta) -->
+<section class="test-section">
+  <div class="section-inner fade-in">
+    <div class="section-label">Beta testers</div>
+    <h2 class="section-h2">Lo que dicen los primeros usuarios.</h2>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Llevaba 2 años con OpositaTest y me aprendía las respuestas de memoria. Con OposIA las preguntas siempre son distintas. Llevo 3 semanas y noto la diferencia."</p>
+        <div class="test-author">María G.</div>
+        <div class="test-role">Preparando Aux. Administrativo AGE</div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"El tutor de IA es una barbaridad. Le pregunté una duda sobre la Ley 40/2015 y me explicó el artículo concreto con ejemplos prácticos. Antes tardaba media hora buscando en Google."</p>
+        <div class="test-author">Alejandro M.</div>
+        <div class="test-role">Preparando Policía Nacional</div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"El mapa de debilidades me flipó. Vi que estaba fallando casi todo el bloque de procedimiento administrativo sin saberlo. Eso no lo te dice ninguna app de la competencia."</p>
+        <div class="test-author">Laura P.</div>
+        <div class="test-role">Preparando Tramitación Procesal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="section-inner">
+    <div class="section-label fade-in">FAQ</div>
+    <h2 class="section-h2 fade-in">Preguntas frecuentes.</h2>
+    <div class="faq-list fade-in">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>¿Cuándo está disponible la app?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">La beta cerrada empieza en junio 2026. Los primeros en apuntarse a la lista de espera tendrán acceso prioritario y precio especial de lanzamiento.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>¿Las preguntas de IA son fiables para el examen real?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Sí. La IA genera preguntas basadas en el texto exacto de las leyes vigentes y del temario oficial de cada convocatoria. Cada pregunta incluye referencia al artículo concreto de donde se extrae. Además, el banco de preguntas históricas reales siempre está disponible como base.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>¿Qué pasa si cambio de oposición?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Tu suscripción te da acceso a todas las oposiciones disponibles. Si decides cambiar de la Policía Nacional al Aux. Administrativo, solo tienes que seleccionar la nueva en la app. Sin costes adicionales.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>¿Está disponible en iOS y Android?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Sí, la app estará disponible en App Store y Google Play. También habrá versión web para estudiar desde el ordenador.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>¿Puedo cancelar en cualquier momento?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Por supuesto. Sin permanencia ni letra pequeña. Cancelas y tu cuenta pasa a tier gratuito automáticamente. Conservas todo tu historial y estadísticas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="section-inner">
+    <div class="section-label" style="color:var(--accent2)">Únete ahora</div>
+    <h2 class="section-h2">Tu plaza no se va a aprobar sola.</h2>
+    <p class="section-sub">Únete a la lista de espera. Gratis. Sin tarjeta. Acceso prioritario a la beta.</p>
+    <div class="cta-form">
+      <input class="cta-input" type="email" id="cta-email" placeholder="tu@email.com" />
+      <button class="cta-btn" onclick="joinWaitlist('cta')">Quiero mi plaza →</button>
+    </div>
+    <div class="success-msg" id="cta-success" style="display:none;margin:16px auto 0;max-width:360px">🎉 ¡Apuntado! Te avisamos cuando lancemos.</div>
+    <p style="margin-top:16px;font-size:12px;color:rgba(255,255,255,0.3)">✓ Sin spam · ✓ Baja cuando quieras · ✓ Beta en junio 2026</p>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 OposIA — Todos los derechos reservados</span>
+  <span>Hecho con IA en España 🇪🇸</span>
+</footer>
+
+<script>
+// Waitlist
+function joinWaitlist(source) {
+  const emailId = source === 'cta' ? 'cta-email' : 'hero-email';
+  const successId = source === 'cta' ? 'cta-success' : 'hero-success';
+  const email = document.getElementById(emailId)?.value;
+  if (!email || !email.includes('@')) {
+    const el = document.getElementById(emailId);
+    if(el){ el.style.borderColor = '#EF9A9A'; setTimeout(()=>el.style.borderColor='',1500); }
+    return;
+  }
+  // In production: POST to your backend
+  console.log('New signup:', email, 'source:', source);
+  document.getElementById(emailId).value = '';
+  const msg = document.getElementById(successId);
+  if(msg){ msg.style.display = 'block'; setTimeout(()=>msg.style.display='none', 5000); }
+}
+
+// FAQ
+function toggleFaq(el) {
+  const answer = el.nextElementSibling;
+  const icon = el.querySelector('.faq-icon');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-icon').forEach(i => { i.textContent = '+'; i.style.transform = ''; });
+  if (!isOpen) {
+    answer.classList.add('open');
+    icon.textContent = '−';
+  }
+}
+
+// Scroll animations
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Pill interactions
+document.querySelectorAll('.opo-pill:not(.hot)').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('.opo-pill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+  });
+});
+
+// Enter key on inputs
+document.querySelectorAll('input[type=email]').forEach(input => {
+  input.addEventListener('keydown', e => {
+    if(e.key === 'Enter') {
+      const isHero = input.id === 'hero-email';
+      joinWaitlist(isHero ? 'hero' : 'cta');
+    }
+  });
+});
+</script>
+</body>
+</html>
